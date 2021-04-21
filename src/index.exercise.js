@@ -8,18 +8,20 @@
 // and using any modern toolchain will allow you to simply import the CSS file
 // but CSS-in-JS is generally easier to maintain.
 import '@reach/dialog/styles.css'
+import 'bootstrap/dist/css/bootstrap-reboot.css'
+import { Button, FormGroup, Input } from 'components/lib.exercise'
 import * as React from 'react'
 import ReactDOM from 'react-dom'
+import { Logo } from './components/logo'
 // 🐨 you'll need to import some new components that you'll be creating
 // in this file
 // import {Button, Input, FormGroup} from './components/lib'
-import {Modal, ModalContents, ModalOpenButton} from './components/modal'
-import {Logo} from './components/logo'
+import { Modal, ModalContents, ModalOpenButton } from './components/modal'
 
-function LoginForm({onSubmit, submitButton}) {
+function LoginForm({ onSubmit, submitButton }) {
   function handleSubmit(event) {
     event.preventDefault()
-    const {username, password} = event.target.elements
+    const { username, password } = event.target.elements
 
     onSubmit({
       username: username.value,
@@ -41,15 +43,15 @@ function LoginForm({onSubmit, submitButton}) {
     <form onSubmit={handleSubmit}>
       {/* 🐨 these div elements could be a FormGroup you create in components/lib */}
       {/* 🐨 and the inputs elements could be custom styled Input components too */}
-      <div>
+      <FormGroup>
         <label htmlFor="username">Username</label>
-        <input id="username" />
-      </div>
-      <div>
+        <Input id="username" />
+      </FormGroup>
+      <FormGroup>
         <label htmlFor="password">Password</label>
-        <input id="password" type="password" />
-      </div>
-      <div>{React.cloneElement(submitButton, {type: 'submit'})}</div>
+        <Input id="password" type="password" />
+      </FormGroup>
+      <div>{React.cloneElement(submitButton, { type: 'submit' })}</div>
     </form>
   )
 }
@@ -86,23 +88,23 @@ function App() {
       <div>
         <Modal>
           <ModalOpenButton>
-            <button variant="primary">Login</button>
+            <Button variant="primary">Login</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Login form" title="Login">
             <LoginForm
               onSubmit={login}
-              submitButton={<button variant="primary">Login</button>}
+              submitButton={<Button variant="primary">Login</Button>}
             />
           </ModalContents>
         </Modal>
         <Modal>
           <ModalOpenButton>
-            <button variant="secondary">Register</button>
+            <Button variant="secondary">Register</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Registration form" title="Register">
             <LoginForm
               onSubmit={register}
-              submitButton={<button variant="secondary">Register</button>}
+              submitButton={<Button variant="secondary">Register</Button>}
             />
           </ModalContents>
         </Modal>
