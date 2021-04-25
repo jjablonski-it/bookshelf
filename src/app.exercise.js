@@ -26,8 +26,8 @@ function App() {
   const { data: user, error, isIdle, isLoading, isSuccess, isError, run, setData: setUser } = useAsync()
 
   React.useEffect(() => {
-    getUser().then(u => setUser(u))
-  }, [])
+    run(getUser())
+  }, [run])
 
   const login = form => auth.login(form).then(u => setUser(u))
   const register = form => auth.register(form).then(u => setUser(u))
@@ -36,7 +36,6 @@ function App() {
     setUser(null)
   }
 
-  console.log(isLoading);
   if (isLoading || isIdle) return <FullPageSpinner />
 
   return user ? (
