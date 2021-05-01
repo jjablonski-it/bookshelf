@@ -1,21 +1,22 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core'
-import * as auth from 'auth-provider'
+import {jsx} from '@emotion/core'
+
 import * as React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { AuthenticatedApp } from './authenticated-app'
-import { FullPageSpinner } from './components/lib'
+import * as auth from 'auth-provider'
+import {BrowserRouter as Router} from 'react-router-dom'
+import {FullPageSpinner} from './components/lib'
 import * as colors from './styles/colors'
-import { UnauthenticatedApp } from './unauthenticated-app'
-import { client } from './utils/api-client'
-import { useAsync } from './utils/hooks'
+import {client} from './utils/api-client'
+import {useAsync} from './utils/hooks'
+import {AuthenticatedApp} from './authenticated-app'
+import {UnauthenticatedApp} from './unauthenticated-app'
 
 async function getUser() {
   let user = null
 
   const token = await auth.getToken()
   if (token) {
-    const data = await client('me', { token })
+    const data = await client('me', {token})
     user = data.user
   }
 
@@ -68,8 +69,7 @@ function App() {
   }
 
   if (isSuccess) {
-    const props = { user, login, register, logout }
-    // 🐨 wrap the BrowserRouter around the AuthenticatedApp
+    const props = {user, login, register, logout}
     return user ? (
       <Router>
         <AuthenticatedApp {...props} />
@@ -80,5 +80,4 @@ function App() {
   }
 }
 
-export { App }
-
+export {App}
