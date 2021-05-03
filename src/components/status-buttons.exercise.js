@@ -1,23 +1,26 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-
+import { jsx } from '@emotion/core'
+import Tooltip from '@reach/tooltip'
 import * as React from 'react'
 import {
-  FaCheckCircle,
-  FaPlusCircle,
-  FaMinusCircle,
-  FaBook,
-  FaTimesCircle,
+  FaBook, FaCheckCircle,
+
+  FaMinusCircle, FaPlusCircle,
+
+
+  FaTimesCircle
 } from 'react-icons/fa'
-import Tooltip from '@reach/tooltip'
+import { useMutation } from 'react-query'
+import * as colors from 'styles/colors'
+import { client } from 'utils/api-client.exercise'
 // 🐨 you'll need useQuery, useMutation, and queryCache from 'react-query'
 // 🐨 you'll also need client from 'utils/api-client'
-import {useAsync} from 'utils/hooks'
-import * as colors from 'styles/colors'
-import {CircleButton, Spinner} from './lib'
+import { useAsync } from 'utils/hooks'
+import { CircleButton, Spinner } from './lib'
 
-function TooltipButton({label, highlight, onClick, icon, ...rest}) {
-  const {isLoading, isError, error, run} = useAsync()
+
+function TooltipButton({ label, highlight, onClick, icon, ...rest }) {
+  const { isLoading, isError, error, run } = useAsync()
 
   function handleClick() {
     run(onClick())
@@ -32,8 +35,8 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
             color: isLoading
               ? colors.gray80
               : isError
-              ? colors.danger
-              : highlight,
+                ? colors.danger
+                : highlight,
           },
         }}
         disabled={isLoading}
@@ -47,7 +50,7 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
   )
 }
 
-function StatusButtons({user, book}) {
+function StatusButtons({ user, book }) {
   // 🐨 call useQuery here to get the listItem (if it exists)
   // queryKey should be 'list-items'
   // queryFn should call the list-items endpoint
@@ -71,6 +74,7 @@ function StatusButtons({user, book}) {
   // 🐨 call useMutation here and assign the mutate function to "create"
   // the mutate function should call the list-items endpoint with a POST
   // and the bookId the listItem is being created for.
+  const [create] = useMutation(() => client('list-items', { data: { bookId: book.id }, token: user.token }))
 
   return (
     <React.Fragment>
@@ -107,6 +111,7 @@ function StatusButtons({user, book}) {
           label="Add to list"
           highlight={colors.indigo}
           // 🐨 add an onClick here that calls create
+          onClick={create}
           icon={<FaPlusCircle />}
         />
       )}
@@ -114,4 +119,5 @@ function StatusButtons({user, book}) {
   )
 }
 
-export {StatusButtons}
+export { StatusButtons }
+
