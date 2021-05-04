@@ -8,3 +8,4 @@
 - Get query
 - invalidateQueries
 - removing
+- mark as read
